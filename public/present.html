@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz de Pâques - Par Ines & Fred</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body class="present min-vw-100 d-flex justify-content-center align-items-center text-center text-white">
+    <div id="firebaseui-auth-container"></div>
+
+    <div id="lobby-block" class="h-100 w-100 mx-5 hide-on-refresh" style="display:none">
+      <div class="d-flex flex-column">
+        <h1 class="display-4 mt-3 font-weight-bold">Prêts pour le quiz ?</h1>
+        <h1 class="display-3 mb-3 mt-2 font-weight-bold">quiz.inesfred.com</h1>
+        <div id="lobby-users-container" class="row empty-on-refresh"></div>
+      </div>
+    </div>
+
+    <div id="title-block" class="container h-100 hide-on-refresh" style="display:none">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center">
+        <div></div>
+        <div id="title-image-block" class="mb-4 hide-on-refresh" style="display:none">
+          <img id="title-image" class="align-self-center mw-100 mh-100 rounded-lg"></img>
+        </div>
+        <h2 id="title-text"></h2>
+      </div>
+    </div>
+
+    <div id="left-panel" class="h-100 hide-on-refresh" style="display:none">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+        <div id="question-header-block" class="container p-2 hide-on-refresh" style="display:none">
+          <div class="d-flex justify-content-start align-items-center">
+            <div id="question-count-block">
+                <h4><span id="question-theme"></span> <span id="question-id"></span> / <span id="question-count"></span></h4>
+            </div>
+            <div id="timer-block" class="ml-auto hide-on-refresh" style="display:none">
+                <h4 id="timer"></h4>
+            </div>
+            <div id="timer-icon-block" class="ml-1 hide-on-refresh" style="display:none">
+              <i class="material-icons">timer</i>
+            </div>
+          </div>
+        </div>
+
+        <div id="question-block" class="container p-2 hide-on-refresh" style="display:none">
+          <div class="h-100 w-100 d-flex flex-column justify-content-center rounded-lg">
+            <div id="question-image-block" class="mt-2">
+              <img id="question-image" class="align-self-center mw-100 mh-100 rounded-lg hide-on-refresh" style="display:none"></img>
+            </div>
+            <div id="question-text" class="h2 my-2 mx-2 empty-on-refresh"></div>
+          </div>
+        </div>
+
+        <div id="answers-block" class="container p-0 hide-on-refresh" style="display:none">
+          <div id="answers-container" class="h-100 w-100 d-flex flex-wrap empty-on-refresh"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="right-panel" class="h-100 hide-on-refresh" style="display:none">
+      <div id="live-answers-table-block" class="h-100 w-100 py-5 hide-on-refresh" style="display:none">
+        <div class="h-100 w-100 d-flex">
+          <div class="h-100 w-50 border-right">
+            <h4 class="mb-3">Réfléchissent</h4>
+            <div id="pending-answers-container" class="d-flex flex-column empty-on-refresh"></div>
+          </div>
+          <div class="h-100 w-50">
+            <h4 class="mb-3">Ont répondu</h4>
+            <div id="live-answers-container" class="d-flex flex-column empty-on-refresh"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="leaderboard-block" class="h-100 w-100 py-5 hide-on-refresh" style="display:none">
+        <table id="leaderboard-table" class="table table-striped table-sm font-weight-bold">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ÉQUIPE</th>
+              <th>SCORE</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-rows-container"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="templates" hidden>
+      <div class="lobby-user-block col-2 p-1">
+        <div class="lobby-user-background h-100 w-100 d-flex flex-column justify-content-center rounded-lg">
+          <h5 class="lobby-user-name"></h3>
+        </div>
+      </div>
+      <div class="answer-block col-12 col-md-6 p-2">
+        <div class="answer-background h-100 w-100 d-flex flex-column justify-content-center rounded-lg">
+          <div class="answer-text"></div>
+          <h5 class="answer-count"></h5>
+        </div>
+      </div>
+      <table>
+        <div class="live-answer">
+          <div class="live-answer-username"></div>
+        </div>
+      </table>
+      <table>
+        <tr class="leaderboard-row">
+          <td class="leaderboard-row-rank"></td>
+          <td class="leaderboard-row-name"></td>
+          <td class="leaderboard-row-score"></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- update the version number as needed -->
+    <script src="/__/firebase/7.13.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script src="/__/firebase/7.13.2/firebase-auth.js"></script>
+    <script src="/__/firebase/7.13.2/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script src="/__/firebase/init.js"></script>
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="js/common.js"></script>
+    <script src="js/present.js"></script>
+  </body>
+</html>

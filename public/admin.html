@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tour de contrôle</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css">
+  </head>
+  <body class="admin text-center">
+    <div id="firebaseui-auth-container"></div>
+    <div id="console-container" class="h-100 w-100" style="display:none">
+      <div class="container h-75 d-flex flex-column justify-content-around" >
+        <div class="row align-items-center mb-5">
+          <div class="col">
+            <h1 class="display-2">Quiz de Pâques</h1>
+            <h1 class="display-4">Tour de contrôle</h1>
+          </div>
+        </div>
+        <div class="row align-items-center mt-5">
+          <div class="col-6">
+            <h3 class="mb-3">État actuel du quiz:</h3>
+            <h4 id="config-display"></h4>
+          </div>
+          <div class="col-6">
+            <button id="next-button" class="btn btn-primary btn-large" onclick="next()">Suivant</button>
+          </div>
+        </div>
+        <div class="row align-items-center mt-5">
+          <div class="col-6">
+            <h3 class="mb-2">Aller à une question</h3>
+            <div class="form-group">
+              <input id="question-id-input" type="number" class="form-control" autocomplete="off">
+            </div>
+            <button class="btn btn-primary mb-2" onclick="goToQuestion()">Poser cette question</button>
+            <button class="btn btn-primary mb-2" onclick="goToQuestionReview(null, false, false)">Corriger cette question</button>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <select id="title-input" class="form-control"></select>
+            </div>
+            <button class="btn btn-primary mb-2" onclick="goToTitle()">Montrer titre</button>
+            <!-- <button id="previous-button" class="btn btn-primary btn-large" onclick="next()">Précédent</button> -->
+          </div>
+        </div>
+        <div class="row align-items-center mt-5">
+          <div class="col-6">
+            <button class="btn btn-primary" onclick="goToLobby()">Afficher l'accueil</button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-primary" onclick="goToLeaderboard()">Afficher les scores</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- update the version number as needed -->
+    <script src="/__/firebase/7.13.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script src="/__/firebase/7.13.2/firebase-auth.js"></script>
+    <script src="/__/firebase/7.13.2/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script src="/__/firebase/init.js"></script>
+
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>

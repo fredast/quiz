@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz de Pâques - Par Ines & Fred</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=1">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=1">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=1">
+    <link rel="manifest" href="/favicon/site.webmanifest?v=1">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/styles.css?v=1">
+  </head>
+  <body class="main min-vw-100 d-flex flex-column justify-content-center align-items-center text-center text-white">
+    <div id="welcome-block" class="container h-100 hide-on-refresh">
+      <div class="row h-100">
+        <div class="col d-flex flex-column justify-content-around">
+          <div></div>
+          <div class="d-md-none">
+            <h1 class="display-3">Quiz</h1>
+            <h1 class="display-3">de</h1>
+            <h1 class="display-3">Pâques</h1>
+          </div>
+          <div class="d-none d-md-block">
+            <h1 class="display-3">Quiz de Pâques</h1>
+          </div>
+          <h5 style="text-transform: none; font-style: italic;"> &copy; Ines & Fred Production</h5>
+        </div>
+      </div>
+    </div>
+
+    <div id="username-input-block" class="container hide-on-refresh" style="display:none">
+      <div class="row justify-content-center">
+        <div class="col-12 mb-3">
+          <h1 class="my-3">Entrez votre nom d'équipe</h1>
+        </div>
+        <div class="col-12 col-md-6">
+          <form action="javascript:void(0);">
+            <div class="form-group">
+              <input id="username-input" type="string" class="form-control" autocomplete="off">
+            </div>
+            <button class="btn" onclick="submitUsername()">C'est parti !</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="lobby-block" class="container hide-on-refresh" style="display:none">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center">
+        <div class ="h2 font-weight-bold">Bienvenue <span id="lobby-username"></span> !</div>
+        <br/>
+        <div class ="h2 font-weight-bold">Merci de patienter</div>
+        <br/>
+        <div class ="h2 font-weight-bold">Le quiz va bientôt commencer</div>
+      </div>
+    </div>
+
+    <div id="title-block" class="container h-100 hide-on-refresh" style="display:none">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center">
+        <div></div>
+        <div id="title-image-block" class="mb-4 hide-on-refresh" style="display:none">
+          <img id="title-image" class="align-self-center mw-100 mh-100 rounded-lg"></img>
+        </div>
+        <h2 id="title-text"></h2>
+      </div>
+    </div>
+
+    <div id="question-header-block" class="container p-2 hide-on-refresh" style="display:none">
+      <div class="d-flex justify-content-start align-items-center">
+        <div id="question-count-block">
+            <h5><span id="question-theme"></span> <span id="question-id"></span> / <span id="question-count"></span></h5>
+        </div>
+        <div id="timer-block" class="ml-auto hide-on-refresh" style="display:none">
+            <h4 id="timer"></h4>
+        </div>
+        <div id="timer-icon-block" class="ml-1 hide-on-refresh" style="display:none">
+          <i class="material-icons">timer</i>
+        </div>
+      </div>
+    </div>
+
+    <div id="question-block" class="container p-2 hide-on-refresh" style="display:none">
+      <div class="h-100 w-100 d-flex flex-column justify-content-center rounded-lg">
+        <div id="question-image-block" class="mt-2">
+          <img id="question-image" class="align-self-center mw-100 mh-100 rounded-lg hide-on-refresh" style="display:none"></img>
+        </div>
+        <div id="question-text" class="h2 my-2 mx-2 empty-on-refresh"></div>
+      </div>
+    </div>
+
+    <div id="answers-block" class="container p-0 hide-on-refresh" style="display:none">
+      <div id="answers-container" class="h-100 w-100 d-flex flex-wrap empty-on-refresh"></div>
+    </div>
+
+    <div id="templates" hidden>
+      <div class="answer-block col-12 col-md-6 p-2">
+        <div class="answer-background h-100 w-100 d-flex flex-column justify-content-center rounded-lg">
+          <div class="answer-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- update the version number as needed -->
+    <script src="/__/firebase/7.13.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script src="/__/firebase/7.13.2/firebase-auth.js"></script>
+    <script src="/__/firebase/7.13.2/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Bootstrap and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="js/common.js?v=1"></script>
+    <script src="js/main.js?v=1"></script>
+  </body>
+</html>
